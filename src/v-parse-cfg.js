@@ -300,7 +300,7 @@ var parser = (function () {
         var eof = findItem (chart[text.length], start, 1);
         if (eof) {
             var pt = makeParseTree (eof);
-            return {success: true, parseTree: pt, sexpr: toSExpression (pt)};
+            return {success: true, parseTree: pt, sexpr: toSExpression (pt), chart: chart};
             
         } else {
             var coords = errors().getCoords (text, right);
