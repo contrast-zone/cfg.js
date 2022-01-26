@@ -2,7 +2,7 @@
 
 *V-parse-cfg* is a general context free grammar (CFG) parser based on a [novel chart parsing algorithm](v-parse-cfg.md). In this package, you can find its javascript implementation.
 
-## about the parser
+## package specifics
 
 Input to the parser is consisted of JSON array representing a grammar, and a string to parse by that grammar. On parsing error, error position and expected symbols are reported, including the whole parsing chart before the error place. On parsing success, an abstract syntax tree (AST), a s-expression representing the tree, and the complete parsing chart is returned. In an ambiguous parsing case (parsing forest), only the first successful tree is stored in AST and s-expression properties, but within the chart property, the whole forest is returned in terms of chart parser.
 
