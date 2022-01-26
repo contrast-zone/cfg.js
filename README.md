@@ -35,7 +35,7 @@ The above is an example of parsing a simple math expression. Adjust the grammar 
 
 ## special characters in literals
 
-Internally, literals are passed through standard `JSON.parse('"' + ... + '"')` javascript call. This means that to use `"` character in literal, we may use escape sequence `\\\"`. Likewise, if we want to use `<` or `/` as the first character of a literal, we may use escape sequences like `\\u003C` or `\\u002F`, respectively. The unusual number of `\` characters in escape sequences are due to JSON string literals nature, as we utilize JSON native format to specify grammars. Note that because of this, all literals must be enclosed not in single, but in double quotes despite the fact that javascript also allows writing string literals enclosed in single quotes. What we get in return is possibility of using `<` and `/` as the first characters of literals without confusing them with rule names or regex-es.
+Internally, grammar literals are passed through standard `JSON.parse('"' + ... + '"')` javascript call. This means that to use `"` character in a literal, we may use escape sequence `\\\"`. Likewise, if we want to use `<` or `/` as the first character of a literal, we may use escape sequences like `\\u003C` or `\\u002F`, respectively. The unusual number of `\` characters in escape sequences are due to JSON string literals nature, as we utilize JSON native format to specify grammars. Note that because of this, all literals must be enclosed not in single, but in double quotes despite the fact that javascript also allows writing string literals enclosed in single quotes. What we get in return is possibility of using `<` and `/` as the first characters of literals without confusing them with rule names or regex-es.
 
 ## license
 
