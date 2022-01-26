@@ -4,7 +4,7 @@
 
 ## package specifics
 
-Input to the parser is consisted of JSON array representing a grammar, and a string to parse by that grammar. On parsing error, error position and expected symbols are reported, including the whole parsing chart before the error position. On parsing success, an abstract syntax tree (AST), a s-expression representing the tree, and the complete parsing chart is returned. In an ambiguous parsing case (parsing forest), only the first successful tree is stored in AST and s-expression properties, but within the chart property, the whole forest is returned in terms of chart parser.
+Input to the parser is consisted of JSON array representing a grammar, and a string to parse by that grammar. On parsing error, error position and expected symbols are reported, including the whole parsing chart before the error position. On parsing success, an abstract syntax tree (AST), an s-expression representing the tree, and the complete parsing chart is returned. In an ambiguous parsing case (parsing forest), only the first successful tree is stored in AST and s-expression properties, but within the chart property, the whole forest is returned in terms of chart parser.
 
 ## testing grammars online
 
