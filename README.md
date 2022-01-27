@@ -12,7 +12,7 @@ To test any grammar, [online parser playground](https://contrast-zone.github.io/
 
 ## using parser in javascript code
 
-Include `src/v-parse-cfg.js` (that's the only file you need) in your javascript code and use the parser like in the following code:
+Include `src/v-parse-cfg.js` (that's the only file you need from this library) in your javascript code and use the parser like in the following code:
 
     var grammar = [
         [[    "<start>"], ["<sum>"                          ]],
