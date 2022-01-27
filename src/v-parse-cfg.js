@@ -230,7 +230,7 @@ var parser = (function () {
         function toSExpression (pt) {
             var i, stack = [], curItem, ret = [];
             
-            stack.push ({pt: pt, ret: ret, par: null, ndx: -1});
+            stack.push ({pt: pt, ret: ret, par: null, ndx: 0});
             while (stack.length > 0) {
                 curItem = stack.pop ();
                 if (typeof curItem.pt === "string")
@@ -238,7 +238,7 @@ var parser = (function () {
                 
                 else
                     if (curItem.pt.children.length === 1)
-                        stack.push ({pt: curItem.pt.children[0], ret: curItem.ret, par: curItem.par, ndx: curItem.ndx});
+                        stack.push ({pt: curItem.pt.children[0], ret: curItem.ret, par: (curItem.par ? curItem.par: {ret: ret}), ndx: curItem.ndx});
                         
                     else
                         for (i = 0; i < curItem.pt.children.length; i++) {
