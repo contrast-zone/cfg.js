@@ -1,4 +1,4 @@
-# *v-parse-cfg* algorithm
+# v-parse-cfg algorithm
 
 *V-parse-cfg* algorithm parses input text against context free grammar rules. The algorithm operates on [context free grammars](https://en.wikipedia.org/wiki/Context-free_grammar). The version of algorithm presented here distinguishes between terminals and non-terminals. Input text is expected to be [lexed](https://en.wikipedia.org/wiki/Lexical_analysis) into an array of words prior to actual parsing.
 
@@ -92,7 +92,6 @@ The main function `Parse` serves as a loop over chart columns and productions. T
 
 After parsing, if `END_OF_FILE` element can be found at the first column offset behind the last input token, the parsing is considered successful. If a parsing error occurs, `END_OF_FILE` will not be placed at appropriate place, and the produced chart may be additionally analyzed for errors. Thus, in the case of an error, it may be relatively simple to report `Expected expression ... at offset ...` type of errors by observing only the last populated column in the resulting chart. Additional chart analyzing may be performed for additional parser functionalities.
 
-The algorithm initially produces chart containing all (successful and unsuccessful) attempts in constructing input string. To actually do something meaningful from the algorithm output, we need to convert it to usual syntax tree suitable for traversing and further processing. `MakeSyntaxTree` function converts the output chart to such a syntax tree. It starts from the `END_OF_FILE` element, and assembles the tree in backwards fassion, towards the uppermost `goal` element. In a case of ambiguous successfuly parsed contents, the function outputs the first successful syntax tree regarding to parse rules ordering.
+The algorithm initially produces chart containing all (successful and unsuccessful) attempts in constructing input string. To actually do something meaningful from the algorithm output, we need to convert it to usual syntax tree suitable for further processing. `MakeSyntaxTree` function converts the output chart to such a syntax tree. It starts from the `END_OF_FILE` element, and assembles the tree in backwards manner, towards the uppermost `start` element. In a case of ambiguous successfuly parsed contents, the function outputs the first successful syntax tree regarding to parse rules ordering.
 
-Let's also mention that the entire algorithm exhibits very well behavior regarding to parsing possibly ambiguous grammars when encountering multiple successful productions for the same input.
-
+Let's also mention that the entire algorithm exhibits very well behavior regarding to parsing against possibly ambiguous grammars when encountering multiple successful productions for the same input.
