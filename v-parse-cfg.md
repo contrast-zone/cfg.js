@@ -2,7 +2,7 @@
 
 *V-parse-cfg* algorithm parses input text against context free grammar rules. The algorithm operates on [context free grammars](https://en.wikipedia.org/wiki/Context-free_grammar). The version of algorithm presented here distinguishes between terminals and non-terminals. It represents a [scannerless parser](https://en.wikipedia.org/wiki/Scannerless_parsing). Here we present the algorithm pseudocode with commentary.
 
-[!](pseudocode-with-commentary.svg)
+![](pseudocode-with-commentary.svg)
 
 Plain pseudocode in text format can be found in [pseudocode.md](pseudocode.md).
 
