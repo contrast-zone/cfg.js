@@ -1,3 +1,7 @@
+    /*
+        v-parse-cfg algorithm pseudocode
+    */
+
     FUNCTION Parse (grammar, start, inputString)
         DECLARE chart := [][];
         
