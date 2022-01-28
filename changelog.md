@@ -2,4 +2,4 @@
 
 - (Jan, 2022)  
 initial commit  
-
+added commentary to pseudocode  

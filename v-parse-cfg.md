@@ -1,88 +1,10 @@
 # v-parse-cfg algorithm
 
-*V-parse-cfg* algorithm parses input text against context free grammar rules. The algorithm operates on [context free grammars](https://en.wikipedia.org/wiki/Context-free_grammar). The version of algorithm presented here distinguishes between terminals and non-terminals. Input text is expected to be [lexed](https://en.wikipedia.org/wiki/Lexical_analysis) into an array of words prior to actual parsing.
+*V-parse-cfg* algorithm parses input text against context free grammar rules. The algorithm operates on [context free grammars](https://en.wikipedia.org/wiki/Context-free_grammar). The version of algorithm presented here distinguishes between terminals and non-terminals. It represents a [scannerless parser](https://en.wikipedia.org/wiki/Scannerless_parsing). Here we present the algorithm pseudocode with commentary.
 
-    FUNCTION Parse (grammar, start, words)
-        DECLARE chart := [][];
-        
-        MergeItem (0, [start, END_OF_FILE], 0, {Sequence: [], Index: -1, Inherited: [], Inheritors: [], Parents: [], Previous: []}, NULL);
-        FOR each new column in chart DO
-            FOR each new item in column DO
-                FOR each production in grammar WHERE item.Sequence[item.Index] == production.Left DO
-                    MergeItem (column.Index, production.Right, 0, item, NULL);
+[!](pseudocode-with-commentary.svg)
 
-        RETURN MakeSyntaxTree ();
-
-        PROCEDURE MergeItem (offset, sequence, index, parent, previous)
-            DECLARE item := chart[offset].FIND (sequence, index);
-
-            IF not found item THEN
-                item := {Sequence: sequence, Index: index, Inherited: [], Inheritors: [], Parents: [], Previous: []};
-                chart[offset].ADD (item);
-
-            IF previous is not NULL and previous not in item.Previous THEN
-                item.Previous.ADD (previous);
-
-            IF parent not in item.Parents THEN
-                item.Parents.ADD (parent);
-                FOR each x in [parent] UNION parent.Inherited DO
-                    FOR each y in [item] UNION item.Inheritors DO
-                        IF y.Index + 1 == y.Sequence.LENGTH THEN
-                            IF (x.Sequence, x.Index) not in y.Inherited THEN
-                                y.Inherited.ADD (x);
-                                x.Inheritors.ADD (y);
-
-                            IF x.Index + 1 < x.Sequence.LENGTH THEN
-                                IF y.Sequence[y.Index] is terminal THEN
-                                    IF y.Sequence[y.Index] == words[offset] THEN
-                                        FOR each z in x.Parents DO
-                                            MergeItem (offset + 1, x.Sequence, x.Index + 1, x.Parents[z], item);
-
-                IF item.index + 1 < item.sequence.length THEN
-                    IF item.Sequence[item.Index] is terminal THEN
-                        IF item.Sequence[item.Index] == words[offset] THEN
-                            MergeItem (offset + 1, item.sequence, item.index + 1, parent, item);
-
-        FUNCTION MakeSyntaxTree ()
-            DECLARE item, reachParent, parents, treeItem, childTreeItem;
-            
-            item := chart[words.LENGTH].FIND (END_OF_FILE);
-            IF not found item THEN
-                RETURN "Error at: " + chart.LENGTH;
-            
-            parents := [{Sequence: [start, END_OF_FILE], Index: 1, Children: []}];
-            WHILE parents.LENGTH > 0;
-                IF item.Index > 0 THEN
-                    reachParent := item;
-                    FOR each p in item.Previous DO
-                        IF reachParent is direct or indirect parent of p THEN
-                            item := p;
-                            EXIT FOR
-
-                    childTreeItem := words[item.offset];
-                    parents.LAST.Index := parents.LAST.Index - 1;
-
-                ELSE
-                    IF item.Sequence == reachParent.Sequence and item.Index == reachParent.Index - 1 THEN
-                        reachParent := {sequence: parents[parents.length - 1].sequence, index: parents[parents.length - 1].index + 1};
-
-                    FOR each p in item.Parents DO
-                        IF reachParent is direct or indirect parent of p THEN
-                            item := p;
-                            EXIT FOR;
-                            
-                    childTreeItem := treeItem;
-                
-                IF item.Index == item.Sequence.LENGTH - 1 THEN
-                    parents.ADD ({Sequence: item.Sequence, Index: item.Index, Children: []});
-                
-                treeItem := parents.LAST;
-                treeItem.Children[childTreeItem.Index] := childTreeItem;
-                
-                IF treeItem.Index == 0 THEN
-                    parents.REMOVE_LAST ();                
-            
-            RETURN treeItem;
+Plain pseudocode in text format can be found in [pseudocode.md](pseudocode.md).
 
 This algorithm is a chart based algorithm that groups parsing items into columns. Columns correspond to offsets from the beginning of input sequence. Columns are incrementally processed, never looking back into the previous columns in the chart. Algorithm stores generated items in the chart as pairs of a sequence and an index of the sequence element. This way it is always possible to know what is ahead element of the current item without looking to back columns. We just increment the index attribute by one, possibly referring to parents of the current item if the index points to the last element.
 
@@ -95,3 +17,4 @@ After parsing, if `END_OF_FILE` element can be found at the first column offset 
 The algorithm initially produces chart containing all (successful and unsuccessful) attempts in constructing input string. To actually do something meaningful from the algorithm output, we need to convert it to usual syntax tree suitable for further processing. `MakeSyntaxTree` function converts the output chart to such a syntax tree. It starts from the `END_OF_FILE` element, and assembles the tree in backwards manner, towards the uppermost `start` element. In a case of ambiguous successfuly parsed contents, the function outputs the first successful syntax tree regarding to parse rules ordering.
 
 Let's also mention that the entire algorithm exhibits very well behavior regarding to parsing against possibly ambiguous grammars when encountering multiple successful productions for the same input.
+

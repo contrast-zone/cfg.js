@@ -1,6 +1,6 @@
 # v-parse-cfg
 
-*V-parse-cfg* is a general context free grammar (CFG) parser based on a [novel chart parsing algorithm](v-parse-cfg.md). In this package, you can find its javascript implementation.
+*V-parse-cfg* is a general context free grammar (CFG) parser based on a novel chart parsing algorithm. In this package, you can find [the algorithm description](v-parse-cfg.md) and its javascript implementation.
 
 ## package specifics
 
@@ -40,3 +40,4 @@ Internally, grammar literals are passed through standard `JSON.parse('"' + ... +
 ## license
 
 The *v-parse-cfg* algorithm and its code in this package are licensed under [MIT license](LICENSE).
+
