@@ -31,7 +31,7 @@
      showguides="true"
      inkscape:zoom="0.95777778"
      inkscape:cx="405.10441"
-     inkscape:cy="439.55916"
+     inkscape:cy="436.42691"
      inkscape:window-width="1848"
      inkscape:window-height="1016"
      inkscape:window-x="72"
@@ -694,7 +694,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="122.8767"
-         id="tspan16070">                        Merge the next item into relevant column</tspan><tspan
+         id="tspan16070">                        Merge the next item into the right column</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
@@ -879,7 +879,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="220.77269"
-         id="tspan13876">            Populate children of treeItem with ChildTreeItem</tspan><tspan
+         id="tspan13876">            Populate children of treeItem with childTreeItem</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
