@@ -31,7 +31,7 @@
      showguides="true"
      inkscape:zoom="0.95777778"
      inkscape:cx="405.10441"
-     inkscape:cy="436.42691"
+     inkscape:cy="433.29466"
      inkscape:window-width="1848"
      inkscape:window-height="1016"
      inkscape:window-x="72"
@@ -569,12 +569,12 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="56.730766"
-         id="tspan13726">        If the item does not exists, create it</tspan><tspan
+         id="tspan13726">        If the item does not exists</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="59.376606"
-         id="tspan13732" /><tspan
+         id="tspan13732">            create it and add it to chart</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
@@ -634,12 +634,12 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="91.126656"
-         id="tspan13760">                        Let x be in inherited of y</tspan><tspan
+         id="tspan13760">                        Add x to Inherited of y</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="93.772491"
-         id="tspan13764">                        Let y be in inheritors of x</tspan><tspan
+         id="tspan13764">                        Add y to Inheritors of x</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
@@ -724,7 +724,7 @@
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
          y="138.75172"
-         id="tspan13820">        If the item does no exist, report an error</tspan><tspan
+         id="tspan13820">        If the item does no exist, report parsing error</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583"
          x="2.9655738"
