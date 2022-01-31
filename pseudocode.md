@@ -36,7 +36,7 @@
                                 IF y.Sequence[y.Index] is terminal THEN
                                     IF y.Sequence[y.Index] is at inputString[offset] THEN
                                         FOR each z in x.Parents DO
-                                            MergeItem (offset + x.Sequence[x.Index].LENGTH, x.Sequence, x.Index + 1, x.Parents[z], item);
+                                            MergeItem (offset + y.Sequence[y.Index].LENGTH, x.Sequence, x.Index + 1, x.Parents[z], item);
 
                 IF item.index + 1 < item.sequence.length THEN
                     IF item.Sequence[item.Index] is terminal THEN
@@ -53,7 +53,7 @@
             parents := [{Sequence: [start, END_OF_FILE], Index: 1, Children: []}];
             WHILE parents.LENGTH > 0;
                 IF item.Index > 0 THEN
-                    reachParent := item;
+                    reachParent := {sequence: item.sequence, index: item.index - 1};
                     FOR each p in item.Previous DO
                         IF reachParent is direct or indirect parent of p THEN
                             item := p;
@@ -63,8 +63,8 @@
                     parents.LAST.Index := parents.LAST.Index - 1;
 
                 ELSE
-                    IF item.Sequence == reachParent.Sequence and item.Index == reachParent.Index - 1 THEN
-                        reachParent := {sequence: parents[parents.length - 1].sequence, index: parents[parents.length - 1].index + 1};
+                    IF item.Sequence == reachParent.Sequence and item.Index == reachParent.Index THEN
+                        reachParent := {sequence: parents.LAST.sequence, index: parents.LAST.index};
 
                     FOR each p in item.Parents DO
                         IF reachParent is direct or indirect parent of p THEN
