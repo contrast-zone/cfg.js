@@ -31,7 +31,7 @@ Include `src/v-parse-cfg.js` (that's the only file you need from this library) i
     
     var parsed = parser.parse(grammar, text);
 
-The above is an example of parsing a simple math expression. Adjust the grammar rules to fit your requirements. The left sides of the grammar are production rule names, while the right sides are rule bodies. Grammars are required to have at least one `<start>` rule that represents the top of the parsed AST. Production rule names are enclosed within `<` and `>` pairs, while regex-es are enclosed within pairs of `/` symbols. Every other expression is considered as literal.
+The above is an example of parsing a simple math expression. Adjust the grammar rules to fit your requirements. The left sides of the grammar are production rule names, while the right sides are rule bodies. Grammars are required to have at least one `<start>` rule that represents the top of the parsed AST. Production rule names are enclosed within `<` and `>` pairs, while regex-es are enclosed within pairs of `/` symbols. Every other expression is considered as literal. To specify an empty production, please use an empty string like in `[["<empty-production>"], [""]]`.
 
 ## special characters in literals
 
