@@ -1,4 +1,4 @@
-# v-parse-cfg
+# v-parse-cfg.js
 
 *V-parse-cfg* is a general context free grammar (CFG) parser based on a novel chart parsing algorithm. In this package, you can find [the algorithm specification](v-parse-cfg.md) and its [javascript implementation](https://github.com/contrast-zone/v-parse-cfg.js/blob/main/src/v-parse-cfg.js).
 
