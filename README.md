@@ -1,6 +1,6 @@
-# v-parse-cfg.js
+# cfg.js
 
-*V-parse-cfg.js* is a general context free grammar (CFG) parser based on a novel chart parsing algorithm. In this package, you can find [the algorithm specification](v-parse-cfg.md) and its [javascript implementation](https://github.com/contrast-zone/v-parse-cfg.js/blob/main/src/v-parse-cfg.js).
+*cfg.js* is a general context free grammar (CFG) parser based on a novel chart parsing algorithm. In this package, you can find [the algorithm specification](v-parse-cfg.md) and its [javascript implementation](https://github.com/contrast-zone/cfg.js/blob/main/src/cfg.js).
 
 ## package specifics
 
@@ -8,11 +8,11 @@ Input to the parser is consisted of JSON array representing a grammar, and a str
 
 ## testing grammars online
 
-To test any grammar, [online parser playground](https://contrast-zone.github.io/v-parse-cfg.js/playground) is provided. Edit a grammar, edit a text to parse, and click on the `parse` button to examine s-expression and AST output. Also, several simplified grammar examples are offered to be loaded in the playground interface.
+To test any grammar, [online parser playground](https://contrast-zone.github.io/cfg.js/playground) is provided. Edit a grammar, edit a text to parse, and click on the `parse` button to examine s-expression and AST output. Also, several simplified grammar examples are offered to be loaded in the playground interface.
 
 ## using parser in javascript code
 
-Include `src/v-parse-cfg.js` (that's the only file you need from this library) in your javascript code and use the parser like in the following code:
+Include `src/cfg.js` (that's the only file you need from this library) in your javascript code and use the parser like in the following code:
 
     var grammar = [
         [[    "<start>"], ["<sum>"                          ]],
@@ -39,5 +39,5 @@ Internally, grammar literals are passed through standard `JSON.parse('"' + ... +
 
 ## license
 
-The *v-parse-cfg.js* algorithm and its code in this package are licensed under [MIT license](LICENSE).
+The *v-parse-cfg* algorithm and its code in this package are licensed under [MIT license](LICENSE).
 

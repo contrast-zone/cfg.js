@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>v-parse-cfg</title>
-<script src="ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="../src/v-parse-cfg.js"></script>
+<title>cfg.js</title>
+<script src="edit.js" type="text/javascript" charset="utf-8"></script>
+<script src="../src/cfg.js"></script>
 
 <script id="math-exp ruleset" type="text/plain">
 [
@@ -274,74 +274,98 @@
 
 <script>
     function populate (param) {
-        ruleset1.getSession().setValue(document.getElementById(param + ' ruleset').innerHTML);
-        input1.getSession().setValue(document.getElementById(param + ' example').innerHTML);
-        output1.getSession().setValue("");
-        nodes1.getSession().setValue("");
+        ruleset1.setValue(document.getElementById(param + ' ruleset').innerHTML);
+        input1.setValue(document.getElementById(param + ' example').innerHTML);
+        output1.value = "";
+        nodes1.value = "";
     }
     
     cr = String.fromCharCode(13);
     
     var parsed;
 
+    function getCoords (text, offset) {
+        var i, ch, row = 1, col = 1;
+        if (text.length > 0)
+            for (i = 0; i < offset; i += 1) {
+                ch = text.charCodeAt(i);
+                if (ch === 13 || ch === 10) {
+                    if (ch === 13 && text.charCodeAt (i + 1) === 10)
+                        i += 1;
+
+                    row += 1;
+                    col = 1;
+                    
+                } else
+                  col += 1;
+            }
+        
+        return {row: row, column: col};
+    }
+
     function outputErrors (parsed) {
         for (i = 0; i < parsed.expected.length; i++) {
-            output1.getSession().setValue(output1.getSession().getValue() + "    " + parsed.expected[i]);
+            output1.value = output1.value + "    " + parsed.expected[i];
             if (i < parsed.expected.length - 1)
-                output1.getSession().setValue(output1.getSession().getValue() + " or " + String.fromCharCode(13));
+                output1.value = output1.value + " or " + String.fromCharCode(13);
         }
             
-        output1.getSession().setValue(output1.getSession().getValue() + String.fromCharCode(13));
+        output1.value = output1.value + String.fromCharCode(13);
     }
     
     var inProcess = false;
     function startParse () {
         if (!inProcess) {
             inProcess = true;
-            output1.getSession().setValue("");
-            var grammarstring = ruleset1.getSession().getValue();
-            var inputstring = input1.getSession().getValue();
+            output1.value = "";
+            var grammarstring = ruleset1.getValue();
+            var inputstring = input1.getValue();
 
-            nodes1.getSession().setValue("");
-            output1.getSession().setValue("Reading branching rules... ");
-            output1.gotoLine(0);
-            nodes1.gotoLine(0);
+            nodes1.value = "";
+            output1.value = "Reading branching rules... ";
+
+            output1.selectionStart = 0;
+            output1.selectionEnd = 0;
+
+            nodes1.selectionStart = 0;
+            nodes1.selectionEnd = 0;
+
             setTimeout (function (){
                 var time = new Date().getTime();
                 try {
                     rules = JSON.parse (grammarstring);
                 } catch (e) {
-                    output1.getSession().setValue(output1.getSession().getValue() + String.fromCharCode(13));
-                    output1.getSession().setValue(output1.getSession().getValue() + "Error in ruleset:" + String.fromCharCode(13));
-                    output1.getSession().setValue(output1.getSession().getValue() + e.message + String.fromCharCode(13));
+                    output1.value += String.fromCharCode(13);
+                    output1.value += "Error in ruleset:" + String.fromCharCode(13);
+                    output1.value += e.message + String.fromCharCode(13);
                     inProcess = false;
                     return;
                 }
                 
-                output1.getSession().setValue(output1.getSession().getValue() + "done, " + ((new Date().getTime()) - time) + "ms." + String.fromCharCode(13));
-                output1.getSession().setValue(output1.getSession().getValue() + "Processing input...");
+                output1.value += "done, " + ((new Date().getTime()) - time) + "ms." + String.fromCharCode(13);
+                output1.value += "Processing input...";
                 setTimeout (function (){
                     var time = new Date().getTime();
 
-                    parsed = parser.parse (rules, inputstring);
+                    parsed = cfg.parse (rules, inputstring);
                     if (!parsed.success) {
-                        output1.getSession().setValue(output1.getSession().getValue() + String.fromCharCode(13));
-                        output1.getSession().setValue(output1.getSession().getValue() + "Error in input at offset " + parsed.offset + " (row: " + parsed.row + ", col: " + parsed.column + ")," + String.fromCharCode(13));
-                        output1.getSession().setValue(output1.getSession().getValue() + "expected: " + String.fromCharCode(13));
+                        output1.value += String.fromCharCode(13);
+                        output1.value += "Error in input at offset " + parsed.offset + " (row: " + parsed.row + ", col: " + parsed.column + ")," + String.fromCharCode(13);
+                        output1.value += "expected: " + String.fromCharCode(13);
                         outputErrors (parsed);
                         inProcess = false;
 
                     } else {
                         setTimeout (function (){
-                            output1.getSession().setValue(output1.getSession().getValue() + "done, " + ((new Date().getTime()) - time) + "ms." + String.fromCharCode(13));
-                            output1.getSession().setValue(output1.getSession().getValue() + "Writing branching nodes... ");
+                            output1.value += "done, " + ((new Date().getTime()) - time) + "ms." + String.fromCharCode(13);
+                            output1.value += "Writing branching nodes... ";
                             setTimeout (function (){
                                 var time = new Date().getTime();
                                 var nd = JSON.stringify (parsed.parseTree, null, 2);
                                 var op = JSON.stringify (parsed.sexpr, null, 2);
-                                output1.getSession().setValue(output1.getSession().getValue() + "done, " + ((new Date().getTime()) - time) + "ms." + String.fromCharCode(13));
-                                nodes1.getSession().setValue(nd);
-                                output1.getSession().setValue(output1.getSession().getValue() + op);
+                                output1.value += "done, " + ((new Date().getTime()) - time) + "ms." + String.fromCharCode(13);
+                                nodes1.value += nd;
+                                output1.value += op;
                             }, 0);
                             inProcess = false;
                         }, 0);
@@ -458,7 +482,7 @@
 <tbody>
 <tr>
 <td class="exRound" id="top" cellpadding="10" align="center" valign="middle" height="30">
-<font size="5"><strong>v-parse-cfg algorithm playground</strong></font>
+<font size="5"><strong>cfg.js algorithm playground</strong></font>
 </td>
 </tr>
 <tr>
@@ -497,23 +521,28 @@
             <tr height="100%">
              <!-- style="margin-top:-8px;"-->
              <td class="exRound" id="in" valign="top">
-                <div id="ruleset1" class=" ace_editor  ace-solarized-dark ace_dark"></div>
+                <div id="ruleset1" style="position: relative; width: 100%; height: 100%;">
+                </div>
                 <script>
-                    ruleset1 = ace.edit("ruleset1");
-                    ruleset1.$blockScrolling = Infinity;
-                    ruleset1.setTheme("ace/theme/dark");
-                    ruleset1.setHighlightSelectedWord(false);
-                    ruleset1.setShowPrintMargin(false);
-                    ruleset1.getSession().setUseSoftTabs(true);
-                    ruleset1.getSession().selection.on('changeCursor', function(e) {
-                        document.getElementById('lblGrammarCaret').innerHTML = "(" + (ruleset1.getCursorPosition().row + 1) + ", " + (ruleset1.getCursorPosition().column + 1) + ")&nbsp;";
-                    });
-                    ruleset1.getSession().on('change', function(e) {
-                        //document.getElementById('forestOut').style.display = 'none';
-                    });
-                    ruleset1.setOptions({
-                        fontFamily: "monospace",
-                        fontSize: "8pt"
+                    var options = {
+                        font: "8pt monospace",
+                        tabWidth: 4,
+                        colorText: "rgb(208,208,208)",
+                        colorTextBack: "black",
+                        colorKeyword: "rgb(104,104,104)",
+                        colorKeywordBack: "transparent",
+                        colorBracketMatch: "white",
+                        colorBracketMatchBack: "rgb(75,75,75)",
+                        colorStringAndComment: "rgb(128,128,128)",
+                        keywords: [],
+                        stringsAndComments: "(\"([^\"\\\\\\n]|(\\\\.))*((\")|(\\n)|($)))"
+                    };
+                    
+                    var ruleset1 = edit ("ruleset1", options);
+                    
+                    document.getElementById('ruleset1').addEventListener('selectionchange', function(e) {
+                        var pos = getCoords(ruleset1.getValue(), ruleset1.getSelectionStart());
+                        document.getElementById('lblGrammarCaret').innerHTML = "(" + pos.row + ", " + pos.column + ")&nbsp;";
                     });
                 </script>
              </td>
@@ -549,24 +578,28 @@
                 </tr>
                 <tr height="100%">
                   <td class="exRound" id="in">
-                    <div id="input1" class=" ace_editor ace-solarized-dark ace_dark"></div>
+                    <div id="input1" style="relative; width: 100%; height: 100%;">
+                    </div>
                     <script>
-                        input1 = ace.edit("input1");
-                        input1.$blockScrolling = Infinity;
-                        input1.setTheme("ace/theme/dark");
-                        //input1.renderer.setShowGutter(false);
-                        input1.setHighlightSelectedWord(false)
-                        input1.setShowPrintMargin(false);
-                        input1.getSession().selection.on('changeCursor', function(e) {
-                            document.getElementById('lblInputCaret').innerHTML = "(" + (input1.getCursorPosition().row + 1) + ", " + (input1.getCursorPosition().column + 1) + ")&nbsp;";
-                        });
-                        input1.getSession().on('change', function(e) {
-                            //document.getElementById('forestOut').style.display = 'none';
-                        });
-                        //input1.setReadOnly(true);
-                        input1.setOptions({
-                            fontFamily: "monospace",
-                            fontSize: "8pt"
+                        var options = {
+                            font: "8pt monospace",
+                            tabWidth: 4,
+                            colorText: "rgb(208,208,208)",
+                            colorTextBack: "black",
+                            colorKeyword: "rgb(104,104,104)",
+                            colorKeywordBack: "transparent",
+                            colorBracketMatch: "white",
+                            colorBracketMatchBack: "rgb(75,75,75)",
+                            colorStringAndComment: "rgb(128,128,128)",
+                            keywords: [],
+                            stringsAndComments: "(\"([^\"\\\\\\n]|(\\\\.))*((\")|(\\n)|($)))"
+                        };
+                        
+                        var input1 = edit ("input1", options);
+                        
+                        document.getElementById('input1').addEventListener('selectionchange', function(e) {
+                            var pos = getCoords(input1.getValue(), input1.getSelectionStart());
+                            document.getElementById('lblInputCaret').innerHTML = "(" + pos.row + ", " + pos.column + ")&nbsp;";
                         });
                     </script>
                   </td>
@@ -604,20 +637,8 @@
                   </tr>
                   <tr height="100%">
                     <td class="exRound" id="in" style="border-radius: 0px 0px 15px 15px;">
-                      <div id="output1" class=" ace_editor ace-solarized-light ace_dark" style="border-radius: 0px 0px 14px 14px;"></div>
-                      <script>
-                        output1 = ace.edit("output1");
-                        output1.$blockScrolling = Infinity;
-                        output1.setTheme("ace/theme/light");
-                        //output1.renderer.setShowGutter(false);
-                        output1.setHighlightSelectedWord(false);
-                        output1.setShowPrintMargin(false);
-                        output1.setReadOnly(true);
-                        output1.setOptions({
-                            fontFamily: "monospace",
-                            fontSize: "8pt"
-                        });
-                      </script>
+                      <textarea id="output1" readonly wrap="off" spellcheck="false" id="output" style="outline: none; box-sizing: border-box; width: 100%; height:100%; resize: none; display: block; border-style: none; background-color: black; color: white; font: 8pt monospace; border-radius: 0px 0px 14px 14px; margin: 0; padding:5px;">
+                      </textarea>
                     </td>
                   </tr>
                 </tbody>
@@ -637,34 +658,20 @@
                 <font size="2">
                 <b>
                   &nbsp; &nbsp; 4. abstract syntax tree output &nbsp;
-                  <a onclick="nodes1.getSession().foldAll()" class="exHover" href="javascript:void(null);">
+                  <!--a onclick="nodes1.getSession().foldAll()" class="exHover" href="javascript:void(null);">
                     &nbsp; collapse all &nbsp;
                   </a> &nbsp;
                   <a onclick="nodes1.getSession().unfold()" class="exHover" href="javascript:void(null);">
                     &nbsp; expand all &nbsp;
-                  </a> &nbsp;
+                  </a--> &nbsp;
                 </b>
                 </font>
              </td>
             </tr>
             <tr height="100%">
              <td class="exRound" id="in" style="border-radius: 0px 0px 15px 15px;">
-              <div id="nodes1" class=" ace_editor ace-solarized-light ace_dark" style="border-radius: 0px 0px 14px 14px;"></div>
-              <script>
-                nodes1 = ace.edit("nodes1");
-                nodes1.$blockScrolling = Infinity;
-                nodes1.getSession().setMode("ace/mode/json");
-                //editor.getSession().setUseWrapMode(true);
-                nodes1.setTheme("ace/theme/light");
-                //nodes1.renderer.setShowGutter(false);
-                nodes1.setHighlightSelectedWord(false);
-                nodes1.setShowPrintMargin(false);
-                nodes1.setReadOnly(true);
-                nodes1.setOptions({
-                    fontFamily: "monospace",
-                    fontSize: "8pt"
-                });
-              </script>
+              <textarea id="nodes1" readonly wrap="off" spellcheck="false" id="output" style="outline: none; box-sizing: border-box; width: 100%; height:100%; resize: none; display: block; border-style: none; background-color: black; color: white; font: 8pt monospace; border-radius: 0px 0px 14px 14px; margin: 0; padding:5px;">
+              </textarea>
              </td>
             </tr>
             </tbody></table>

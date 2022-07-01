@@ -1,8 +1,8 @@
-// v-parse-cfg.js
+// cfg.js
 // (c) contrast zone, 2022
 // MIT License
 
-var parser = (
+var cfg = (
     function (patt) {
         return {
             parse: patt.parse

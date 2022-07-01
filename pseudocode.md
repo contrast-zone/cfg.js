@@ -57,7 +57,7 @@
                     FOR each p in item.Previous DO
                         IF reachParent is direct or indirect parent of p THEN
                             item := p;
-                            EXIT FOR
+                            EXIT FOR;
 
                     childTreeItem := inputString.substring (item.offset, item[item.index].LENGTH);
                     parents.LAST.Index := parents.LAST.Index - 1;
